@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MailZen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <!-- SCREEN: Login -->
+  <div id="screen-login" class="screen active">
+    <div class="brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="40" height="40" rx="12" fill="url(#grad)"/>
+          <path d="M8 14l12 9 12-9" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <path d="M8 14h24v16a2 2 0 01-2 2H10a2 2 0 01-2-2V14z" stroke="white" stroke-width="2"/>
+          <circle cx="28" cy="12" r="5" fill="#FF6B6B"/>
+          <path d="M26 12l1.5 1.5L30 10" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+          <defs>
+            <linearGradient id="grad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#1a1a2e"/>
+              <stop offset="1" stop-color="#16213e"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <h1 class="brand-name">MailZen</h1>
+      <p class="brand-tagline">Your inbox, finally at peace.</p>
+    </div>
+
+    <div class="privacy-badge">
+      <span class="shield-icon">🛡️</span>
+      <div>
+        <strong>100% Private by Design</strong>
+        <p>Your emails never leave your device. We use Google's official OAuth — no passwords, no data stored on our servers.</p>
+      </div>
+    </div>
+
+    <div class="permissions-list">
+      <p class="permissions-title">We only request:</p>
+      <div class="perm-item">
+        <span class="perm-dot ok"></span>
+        <span>Read email headers (sender, date)</span>
+      </div>
+      <div class="perm-item">
+        <span class="perm-dot ok"></span>
+        <span>Delete emails you choose to remove</span>
+      </div>
+      <div class="perm-item">
+        <span class="perm-dot no"></span>
+        <span>We do <strong>NOT</strong> read email bodies</span>
+      </div>
+      <div class="perm-item">
+        <span class="perm-dot no"></span>
+        <span>We do <strong>NOT</strong> store or sell your data</span>
+      </div>
+    </div>
+
+    <button id="btn-login" class="btn-primary">
+      <svg width="18" height="18" viewBox="0 0 18 18"><path d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 002.38-5.88c0-.57-.05-.66-.15-1.18z" fill="#4285F4"/><path d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2a4.8 4.8 0 01-7.18-2.54H1.83v2.07A8 8 0 008.98 17z" fill="#34A853"/><path d="M4.5 10.52a4.8 4.8 0 010-3.04V5.41H1.83a8 8 0 000 7.18l2.67-2.07z" fill="#FBBC05"/><path d="M8.98 4.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 001.83 5.4L4.5 7.49a4.77 4.77 0 014.48-3.3z" fill="#EA4335"/></svg>
+      Continue with Google
+    </button>
+    <p class="legal-note">By continuing, you agree to our <a href="#" id="privacy-link">Privacy Policy</a>. OAuth tokens are stored locally only.</p>
+  </div>
+
+  <!-- SCREEN: Dashboard -->
+  <div id="screen-dashboard" class="screen">
+    <header class="dash-header">
+      <div class="user-info">
+        <div class="avatar" id="user-avatar">?</div>
+        <div>
+          <div class="user-email" id="user-email">user@gmail.com</div>
+          <div class="user-status">Connected via OAuth</div>
+        </div>
+      </div>
+      <button id="btn-logout" class="btn-icon" title="Sign out">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+      </button>
+    </header>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-num" id="stat-inbox">—</div>
+        <div class="stat-label">Total Emails</div>
+      </div>
+      <div class="stat-card accent">
+        <div class="stat-num" id="stat-unread">—</div>
+        <div class="stat-label">Unread</div>
+      </div>
+      <div class="stat-card warn">
+        <div class="stat-num" id="stat-spam">—</div>
+        <div class="stat-label">Spam</div>
+      </div>
+    </div>
+
+    <div class="action-grid">
+      <button class="action-card" id="btn-analyze">
+        <div class="action-icon">🧹</div>
+        <div class="action-label">Clean Junk</div>
+        <div class="action-desc">Remove 30-day old unread mail</div>
+      </button>
+      <button class="action-card" id="btn-summarize">
+        <div class="action-icon">✨</div>
+        <div class="action-label">AI Summary</div>
+        <div class="action-desc">Important mail digest</div>
+      </button>
+      <button class="action-card" id="btn-priority">
+        <div class="action-icon">🎯</div>
+        <div class="action-label">Prioritize</div>
+        <div class="action-desc">Surface urgent messages</div>
+      </button>
+      <button class="action-card" id="btn-scam">
+        <div class="action-icon">🔍</div>
+        <div class="action-label">Scam Check</div>
+        <div class="action-desc">Detect phishing & fraud</div>
+      </button>
+    </div>
+
+    <div class="privacy-inline">
+      <span>🔒</span> All analysis runs locally — no email content leaves your browser
+    </div>
+  </div>
+
+  <!-- SCREEN: Junk Analysis -->
+  <div id="screen-junk" class="screen">
+    <div class="screen-header">
+      <button class="btn-back" id="back-from-junk">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </button>
+      <h2>Junk Senders</h2>
+      <button class="btn-text-sm" id="btn-select-all">Select All</button>
+    </div>
+
+    <div id="analyzing-state" class="empty-state">
+      <div class="spinner"></div>
+      <p>Scanning your inbox…<br/><small>Reading headers only — never email bodies</small></p>
+    </div>
+
+    <div id="senders-list" class="senders-list hidden"></div>
+
+    <div id="junk-empty" class="empty-state hidden">
+      <div class="empty-icon">🎉</div>
+      <p>No junk found!<br/><small>Your inbox looks clean for the past month.</small></p>
+    </div>
+
+    <div class="junk-footer hidden" id="junk-footer">
+      <div class="selected-count" id="selected-count">0 senders selected</div>
+      <button class="btn-danger" id="btn-delete-selected">
+        🗑️ Delete Selected
+      </button>
+    </div>
+  </div>
+
+  <!-- SCREEN: Confirm Delete -->
+  <div id="screen-confirm" class="screen">
+    <div class="confirm-wrap">
+      <div class="confirm-icon">⚠️</div>
+      <h2 id="confirm-title">Delete all emails from this sender?</h2>
+      <p id="confirm-desc" class="confirm-desc">This will permanently delete all selected emails. This action cannot be undone.</p>
+
+      <div class="confirm-option">
+        <label class="toggle-row">
+          <span>Delete ALL emails from sender (not just old ones)</span>
+          <input type="checkbox" id="chk-delete-all" />
+          <span class="toggle-thumb"></span>
+        </label>
+      </div>
+      <div class="confirm-option" id="unsub-option" style="display:none">
+        <label class="toggle-row">
+          <span>Unsubscribe from mailing list</span>
+          <input type="checkbox" id="chk-unsub" checked />
+          <span class="toggle-thumb"></span>
+        </label>
+      </div>
+
+      <div class="confirm-actions">
+        <button class="btn-secondary" id="btn-cancel-delete">Cancel</button>
+        <button class="btn-danger" id="btn-confirm-delete">Yes, Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN: Summary (AI) -->
+  <div id="screen-summary" class="screen">
+    <div class="screen-header">
+      <button class="btn-back" id="back-from-summary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </button>
+      <h2>AI Digest</h2>
+    </div>
+    <div class="summary-notice">
+      <span>✨</span> AI analysis runs locally via the Anthropic API — your email subjects are processed in your browser session only.
+    </div>
+    <div id="summary-loading" class="empty-state">
+      <div class="spinner"></div>
+      <p>Generating your digest…</p>
+    </div>
+    <div id="summary-content" class="hidden"></div>
+  </div>
+
+  <!-- SCREEN: Done -->
+  <div id="screen-done" class="screen">
+    <div class="done-wrap">
+      <div class="done-icon">✓</div>
+      <h2 id="done-title">Done!</h2>
+      <p id="done-desc"></p>
+      <button class="btn-primary" id="btn-done-back">Back to Dashboard</button>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
